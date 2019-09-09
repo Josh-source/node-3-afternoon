@@ -2,7 +2,8 @@ module.exports = {
     create: (req,res, next) => {
         const dbInstance = req.app.get('db');
         const {name, description, price, image_url} =req.body;
-        dbInstance.creat_product([name, description, price, image_url])
+
+        dbInstance.create_product([name, description, price, image_url])
         .then( () => res.sendStatus(200))
         .catch(err => {
             res.status(500).send({errorMessage: `Better Luck Next Time!`})
@@ -11,8 +12,9 @@ module.exports = {
     getOne: (req, res, next) => {
         const dbInstance = req.app.get('db');
         const {id} = req.params;
+
         dbInstance.read_product(id)
-        .then( () => res.sendStatus(200))
+        .then( product => res.status(200).json(product))
         .catch(err => {
             res.status(500).send({errorMessage: `Better Luck Next Time!`})
         });
@@ -21,7 +23,7 @@ module.exports = {
         const dbInstance = req.app.get('db');
 
         dbInstance.read_products()
-        .then( () => res.sendStatus(200))
+        .then( () => res.status(200))
         .catch(err => {
             res.status(500).send({errorMessage: `Better Luck Next Time!`})
         });
@@ -39,7 +41,7 @@ module.exports = {
         const dbInstance = req.app.get('db');
         const {id} = req.params;
         dbInstance.delete_product(id)
-        .then( () => res.sendStatus(200))
+        .then( () => res.status(200))
         .catch(err => {
             res.status(500).send({errorMessage: `Better Luck Next Time!`})
         });

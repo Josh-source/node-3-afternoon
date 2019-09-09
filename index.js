@@ -1,7 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const massive = require('massive');
-const {getOne, getAll, create, update, deleteOne} = require("./products_controller");
+const products_controller = require("./products_controller");
+
 const app = express();
 
 
@@ -17,11 +18,11 @@ massive(CONNECTION_STRING)
 
 app.use(express.json());
 
-app.get('/api/products', getOne);
-app.get('/api/products/:id', getAll);
-app.put('/api/products/:id', update);
-app.post('/api/products', create);
-app.delete('/api/products/:id', deleteOne);
+app.post('/api/products', products_controller.create);
+app.get('/api/products', products_controller.getAll);
+app.get('/api/products/:id', products_controller.getOne);
+app.put('/api/products/:id', products_controller.update);
+app.delete('/api/products/:id', products_controller.deleteOne);
 
 app.listen(SERVER_PORT, () => {
     console.log(`Server Listening on port ${SERVER_PORT}.`);
